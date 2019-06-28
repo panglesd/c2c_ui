@@ -61,9 +61,21 @@
     @import '@/assets/sass/variables.scss';
 
     section{
-        background-image:url('~@/assets/img/backgrounds/alexbuisse-greenland.jpg');
+        background-image:url('~@/assets/img/backgrounds/alexbuisse-greenland_800.jpg');
         background-size: cover;
         background-position-y: 50%;
+    }
+
+    @media screen and (min-width: $tablet) {
+        section{
+            background-image: url("~@/assets/img/backgrounds/alexbuisse-greenland_1024.jpg");
+        }
+    }
+
+    @media screen and (min-width: $widescreen) {
+        section{
+            background-image: url("~@/assets/img/backgrounds/alexbuisse-greenland_1200.jpg");
+        }
     }
 
     .intro-banner {
