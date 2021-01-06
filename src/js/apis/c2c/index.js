@@ -44,11 +44,7 @@ CamptocampApi.prototype = Object.create(BaseApi.prototype);
 CamptocampApi.prototype.constructor = CamptocampApi;
 
 CamptocampApi.prototype.setAuthorizationToken = function (token) {
-  if (token) {
-    this.axios.defaults.headers.common.Authorization = 'JWT token="' + token + '"';
-  } else if (this.axios.defaults.headers.common.Authorization) {
-    delete this.axios.defaults.headers.common.Authorization;
-  }
+  this.setDefaultHeaders('Autorization', token ? `JWT token="${token}"` : null);
 };
 
 /* some function that not belong to a dedicated service */

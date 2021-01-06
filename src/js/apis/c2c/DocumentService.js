@@ -4,11 +4,11 @@ function DocumentService(api, documentType) {
 }
 
 DocumentService.prototype.getAll = function (params) {
-  return this.api.get('/' + this.documentType + 's', { params });
+  return this.api.get('/' + this.documentType + 's', params);
 };
 
 DocumentService.prototype.get = function (id, lang) {
-  return this.api.get('/' + this.documentType + 's/' + id, { params: { l: lang } });
+  return this.api.get('/' + this.documentType + 's/' + id, { l: lang });
 };
 
 DocumentService.prototype.getCooked = function (id, prefered_lang) {

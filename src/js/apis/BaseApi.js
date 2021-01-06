@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 /// ////////////////////////////////////////////////////////////////////////////////
 // Technically, we should do this in any API call to enhance promise with response :
 // let result = axios.get(url).then(response => result.response = response)
@@ -17,10 +15,10 @@ const ApiData = function (promise) {
   this.loading = true;
 
   promise.then(
-    (response) => {
+    async (response) => {
+      self.data = await response.json();
       self.loading = false;
       self.response = response;
-      self.data = response.data;
     },
     (error) => {
       self.loading = false;
@@ -40,31 +38,42 @@ ApiData.prototype.catch = function (callback) {
 };
 
 const BaseApi = function (apiUrl) {
-  this.axios = axios.create({
-    // axios instances shares same common headers. this trick fix this.
-    headers: { common: {} },
-    baseURL: apiUrl,
-  });
+  this.baseUrl = apiUrl;
+  this.headers = new Map();
 };
+
+BaseApi.prototype.setDefaultHeaders = function (name, value) {
+  if (value) {
+    this.headers.set(name, value);
+  } else {
+    this.headers.delete(name);
+  }
+};
+
+// eslint-disable-next-line eqeqeq
+const removeEmpty = (params) => Object.entries(params).reduce((a, [k, v]) => (v == null ? a : ((a[k] = v), a)), {});
 
 /**
  * Generic request helpers
  */
-
 BaseApi.prototype.get = function (url, params) {
-  return new ApiData(this.axios.get(url, params));
+  const input = new URL(url, this.baseUrl);
+  if (params) {
+    input.search = new URLSearchParams(removeEmpty(params)).toString();
+  }
+  return new ApiData(fetch(input, { headers: this.headers }));
 };
 
 BaseApi.prototype.post = function (url, body) {
-  return new ApiData(this.axios.post(url, body));
+  return new ApiData(fetch(new URL(url, this.baseUrl), { method: 'POST', body, headers: this.headers }));
 };
 
 BaseApi.prototype.put = function (url, body) {
-  return new ApiData(this.axios.put(url, body));
+  return new ApiData(fetch(new URL(url, this.baseUrl), { method: 'PUT', body, headers: this.headers }));
 };
 
 BaseApi.prototype.delete = function (url, body) {
-  return new ApiData(this.axios.delete(url, body));
+  return new ApiData(fetch(new URL(url, this.baseUrl), { method: 'DELETE', body, headers: this.headers }));
 };
 
 export default BaseApi;
