@@ -131,8 +131,22 @@
 </template>
 
 <script>
+import DocumentViewHeader from './utils/DocumentViewHeader';
 import LowDocumentQualityBanner from './utils/LowDocumentQualityBanner';
-import documentViewMixin from './utils/document-view-mixin';
+import CommentsBox from './utils/boxes/CommentsBox';
+import ImagesBox from './utils/boxes/ImagesBox';
+import MapBox from './utils/boxes/MapBox';
+import RecentOutingsBox from './utils/boxes/RecentOutingsBox';
+import RoutesBox from './utils/boxes/RoutesBox';
+import ToolBox from './utils/boxes/ToolBox';
+import ActivitiesField from './utils/field-viewers/ActivitiesField';
+import DoubleNumericField from './utils/field-viewers/DoubleNumericField';
+import FieldView from './utils/field-viewers/FieldView';
+import LabelValue from './utils/field-viewers/LabelValue';
+import MarkdownSection from './utils/field-viewers/MarkdownSection';
+
+import isEditableMixin from '@/js/is-editable-mixin';
+
 const historyWorthActivities = [
   'snow_ice_mixed',
   'mountain_climbing',
@@ -145,8 +159,48 @@ const historyWorthActivities = [
 export default {
   components: {
     LowDocumentQualityBanner,
+
+    DocumentViewHeader,
+
+    CommentsBox,
+    DoubleNumericField,
+    FieldView,
+    LabelValue,
+    ActivitiesField,
+    MapBox,
+    MarkdownSection,
+    RecentOutingsBox,
+    ToolBox,
+    RoutesBox,
+    ImagesBox,
   },
-  mixins: [documentViewMixin],
+  mixins: [isEditableMixin],
+  props: {
+    version: {
+      type: Object,
+      default: null,
+    },
+    promise: {
+      type: Object,
+      default: null,
+    },
+    documentId: {
+      type: Number,
+      default: null,
+    },
+    documentType: {
+      type: String,
+      default: null,
+    },
+    fields: {
+      type: Object,
+      default: null,
+    },
+    expectedLang: {
+      type: String,
+      default: null,
+    },
+  },
 
   data() {
     return {
@@ -155,6 +209,23 @@ export default {
   },
 
   computed: {
+    document() {
+      if (!this.promise || !this.promise.data) {
+        return null;
+      }
+
+      const doc = this.isVersionView ? this.promise.data.document : this.promise.data;
+
+      return doc;
+    },
+    locale() {
+      return this.document ? this.document.cooked : null;
+    },
+
+    lang() {
+      return this.document ? this.document.cooked.lang : null;
+    },
+
     // https://github.com/c2corg/v6_ui/blob/master/c2corg_ui/templates/utils/__init__.py#L103
     gear_articles() {
       const result = {};
