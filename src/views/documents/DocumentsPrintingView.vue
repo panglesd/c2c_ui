@@ -86,7 +86,7 @@ export default {
             fields: constants.objectDefinitions[this.documentType].fields,
           };
         });
-        Promise.all(this.promises).then(() => {
+        Promise.all(this.promises.map(doc => doc.promise)).then(() => {
           Vue.nextTick(function () {
             window.print();
           });
