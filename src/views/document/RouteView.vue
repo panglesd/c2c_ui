@@ -27,8 +27,8 @@
               <label-value v-if="$documentUtils.hasRating(document)" :label="$gettext('ratings')">
                 <document-rating :document="document" show-helper />
               </label-value>
-              <label-value v-if="isEditable" :label="$gettext('ratings')">
-                <edit-link :document="document" :lang="$user.lang" />
+              <label-value v-else-if="isEditable" :label="$gettext('ratings')">
+                <edit-link :document="document" :lang="lang" />
               </label-value>
 
               <field-view v-if="document.glacier_gear != 'no'" :document="document" :field="fields.glacier_gear" />

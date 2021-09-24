@@ -86,7 +86,7 @@ export default function install(Vue) {
 
     created() {
       // Non-reactive data.
-      this.available = {
+      this.availableUI = {
         fr: 'Français',
         it: 'Italiano',
         de: 'Deutsch',
@@ -95,6 +95,17 @@ export default function install(Vue) {
         ca: 'Català',
         eu: 'Euskara',
         zh_CN: 'Chinese',
+      };
+
+      this.availableAPI = {
+        fr: 'Français',
+        it: 'Italiano',
+        de: 'Deutsch',
+        en: 'English',
+        es: 'Español',
+        ca: 'Català',
+        eu: 'Euskara',
+        zh: 'Chinese',
       };
 
       this.translations = {};
@@ -169,6 +180,7 @@ export default function install(Vue) {
           case 'it':
           case 'de':
           case 'es':
+          case 'zh':
             return lang;
           case 'zh_CN':
             return 'zh';
@@ -195,6 +207,8 @@ export default function install(Vue) {
             return 'de_DE';
           case 'es':
             return 'es_ES';
+          case 'zh':
+            return 'zh_CN';
           case 'zh_CN':
             return 'zh_CN';
           default:
