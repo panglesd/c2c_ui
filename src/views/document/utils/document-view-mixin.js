@@ -13,11 +13,7 @@ import LabelValue from './field-viewers/LabelValue';
 import MarkdownSection from './field-viewers/MarkdownSection';
 import ProfilesLinks from './field-viewers/ProfilesLinks';
 
-import constants from '@/js/constants';
-import cooker from '@/js/cooker';
-import imageUrls from '@/js/image-urls';
 import isEditableMixin from '@/js/is-editable-mixin';
-import utils from '@/js/utils';
 import viewModeMixin from '@/js/view-mode-mixin';
 
 export default {
