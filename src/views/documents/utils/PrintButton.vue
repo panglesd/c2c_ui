@@ -6,10 +6,10 @@
 
 <script>
 export default {
-    computed: {
-	path() {
-	    return '/print'+this.$route.fullPath;
-	}
+  computed: {
+    path() {
+      return '/print' + this.$route.fullPath;
     },
+  },
 };
 </script>
