@@ -51,6 +51,7 @@
       />
       <load-user-preferences-button class="is-hidden-tablet query-item-component" />
       <export-csv-button v-if="listMode" class="is-small-mobile"></export-csv-button>
+      <print-button />
     </div>
     <div class="query-items-tags is-hidden-mobile">
       <query-tags :documents="tags" @remove="removeTag"></query-tags>
@@ -62,6 +63,7 @@
 import AssociationQueryItem from './AssociationQueryItem';
 import ExportCsvButton from './ExportCsvButton.vue';
 import LoadUserPreferencesButton from './LoadUserPreferencesButton';
+import PrintButton from './PrintButton';
 import QueryItem from './QueryItem';
 import QuerySortDropdown from './QuerySortDropdown';
 import QueryTags from './QueryTags';
@@ -201,6 +203,7 @@ export default {
 
   components: {
     AssociationQueryItem,
+    PrintButton,
     QueryItem,
     QuerySortDropdown,
     QueryTags,

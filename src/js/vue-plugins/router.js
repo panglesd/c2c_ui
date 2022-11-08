@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import config from '@/js/config';
 import constants from '@/js/constants';
 import DocumentView from '@/views/document/DocumentView';
+import DocumentsPrintingView from '@/views/documents/DocumentsPrintingView';
 import DocumentsView from '@/views/documents/DocumentsView';
 import DashboardView from '@/views/portals/DashboardView';
 import FeedView from '@/views/portals/FeedView';
@@ -72,6 +73,12 @@ const addDocumentTypeView = function (def, editionComponent) {
     path: '/' + def.documentType + 's',
     name: def.documentType + 's',
     component: DocumentsView,
+  });
+
+  routes.push({
+    path: '/print/' + def.documentType + 's',
+    name: def.documentType + 's-print',
+    component: DocumentsPrintingView,
   });
 
   routes.push({
