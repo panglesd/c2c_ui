@@ -67,7 +67,7 @@ export default {
         return true;
       }
 
-      if (this.document.protected) {
+      if (!this.document || this.document.protected) {
         return false;
       }
 

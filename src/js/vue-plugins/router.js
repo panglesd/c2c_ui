@@ -3,17 +3,8 @@ import Router from 'vue-router';
 
 import config from '@/js/config';
 import constants from '@/js/constants';
-import DocumentsView from '@/views//documents/DocumentsView';
-import AreaView from '@/views/document/AreaView';
-import ArticleView from '@/views/document/ArticleView';
-import BookView from '@/views/document/BookView';
-import ImageView from '@/views/document/ImageView';
-import MapView from '@/views/document/MapView';
-import OutingView from '@/views/document/OutingView';
-import ProfileView from '@/views/document/ProfileView';
-import RouteView from '@/views/document/RouteView';
-import WaypointView from '@/views/document/WaypointView';
-import XreportView from '@/views/document/XreportView';
+import DocumentView from '@/views/document/DocumentView';
+import DocumentsView from '@/views/documents/DocumentsView';
 import DashboardView from '@/views/portals/DashboardView';
 import FeedView from '@/views/portals/FeedView';
 import SophiePictureContestView from '@/views/portals/SophiePictureContestView';
@@ -76,7 +67,7 @@ const routes = [
   },
 ];
 
-const addDocumentTypeView = function (def, viewComponent, editionComponent) {
+const addDocumentTypeView = function (def, editionComponent) {
   routes.push({
     path: '/' + def.documentType + 's',
     name: def.documentType + 's',
@@ -86,13 +77,13 @@ const addDocumentTypeView = function (def, viewComponent, editionComponent) {
   routes.push({
     path: '/' + def.documentType + 's/:id(\\d+)/:lang?/:title?',
     name: def.documentType,
-    component: viewComponent,
+    component: DocumentView,
   });
 
   routes.push({
     path: '/' + def.documentType + 's/version/:id(\\d+)/:lang/:version',
     name: def.documentType + '-version',
-    component: viewComponent,
+    component: DocumentView,
   });
 
   routes.push({
@@ -120,16 +111,16 @@ const addDocumentTypeView = function (def, viewComponent, editionComponent) {
   });
 };
 
-addDocumentTypeView(constants.objectDefinitions.area, AreaView, AreaEditionView);
-addDocumentTypeView(constants.objectDefinitions.article, ArticleView, ArticleEditionView);
-addDocumentTypeView(constants.objectDefinitions.book, BookView, BookEditionView);
-addDocumentTypeView(constants.objectDefinitions.image, ImageView, ImageEditionView);
-addDocumentTypeView(constants.objectDefinitions.map, MapView, MapEditionView);
-addDocumentTypeView(constants.objectDefinitions.outing, OutingView, OutingEditionView);
-addDocumentTypeView(constants.objectDefinitions.profile, ProfileView, ProfileEditionView);
-addDocumentTypeView(constants.objectDefinitions.route, RouteView, RouteEditionView);
-addDocumentTypeView(constants.objectDefinitions.waypoint, WaypointView, WaypointEditionView);
-addDocumentTypeView(constants.objectDefinitions.xreport, XreportView, XreportEditionView);
+addDocumentTypeView(constants.objectDefinitions.area, AreaEditionView);
+addDocumentTypeView(constants.objectDefinitions.article, ArticleEditionView);
+addDocumentTypeView(constants.objectDefinitions.book, BookEditionView);
+addDocumentTypeView(constants.objectDefinitions.image, ImageEditionView);
+addDocumentTypeView(constants.objectDefinitions.map, MapEditionView);
+addDocumentTypeView(constants.objectDefinitions.outing, OutingEditionView);
+addDocumentTypeView(constants.objectDefinitions.profile, ProfileEditionView);
+addDocumentTypeView(constants.objectDefinitions.route, RouteEditionView);
+addDocumentTypeView(constants.objectDefinitions.waypoint, WaypointEditionView);
+addDocumentTypeView(constants.objectDefinitions.xreport, XreportEditionView);
 
 routes.push({ path: '*', name: '404', component: NotFoundView });
 

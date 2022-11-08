@@ -1,6 +1,5 @@
 <template>
   <div class="section has-background-white-print">
-    <loading-notification :promise="promise" />
     <document-view-header v-if="document" :document="document" :version="version" />
     <div v-if="document" class="columns is-block-print">
       <div class="column is-3 is-12-print">

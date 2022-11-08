@@ -1,6 +1,5 @@
 <template>
   <div class="section has-background-white-print">
-    <loading-notification :promise="promise" />
     <document-view-header v-if="document" :document="document" :version="version">
       <icon-waypoint-type
         v-if="document && document.waypoint_type"

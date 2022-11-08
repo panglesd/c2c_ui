@@ -47,7 +47,7 @@
       <div style="clear: both" />
     </div>
 
-    <component :is="documentType + '-view'" v-if="isPreview" :draft="document" />
+    <document-view v-if="isPreview" :draft="document" />
 
     <div v-show="!isPreview" class="has-edition-width">
       <hr />
@@ -62,38 +62,18 @@
 </template>
 
 <script>
-import FormRow from './FormRow';
 import SaveDocumentRow from './SaveDocumentRow';
 
 import c2c from '@/js/apis/c2c';
 import constants from '@/js/constants';
-import AreaView from '@/views/document/AreaView';
-import ArticleView from '@/views/document/ArticleView';
-import BookView from '@/views/document/BookView';
-import ImageView from '@/views/document/ImageView';
-import MapView from '@/views/document/MapView';
-import OutingView from '@/views/document/OutingView';
-import ProfileView from '@/views/document/ProfileView';
-import RouteView from '@/views/document/RouteView';
-import WaypointView from '@/views/document/WaypointView';
-import XreportView from '@/views/document/XreportView';
+import DocumentView from '@/views/document/DocumentView';
 
 const BANNERS_ARTICLE_ID = 1110927;
 let htmlBanners = { initialized: false }; // cache for banners
 
 export default {
   components: {
-    FormRow,
-    AreaView,
-    ArticleView,
-    BookView,
-    ImageView,
-    MapView,
-    OutingView,
-    ProfileView,
-    RouteView,
-    WaypointView,
-    XreportView,
+    DocumentView,
 
     SaveDocumentRow,
   },
