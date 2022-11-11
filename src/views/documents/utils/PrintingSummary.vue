@@ -1,0 +1,45 @@
+<template>
+  <div v-if="documents" class="box">
+    <h1 class="title is-1">Summary</h1>
+    <div v-for="(document, index) in documents.documents" :key="index">
+      <a :href="'#toc-entry-' + index">
+        <span class="toc-number">{{ index + 1 }}. </span>
+        <div class="toc-entry">
+          <pretty-route :route="document" v-if="documentType == 'route'" />
+          <pretty-waypoint :waypoint="document" v-else-if="documentType == 'waypoint'" />
+          <pretty-book :book="document" v-else-if="documentType == 'book'" />
+          <pretty-outing :outing="document" v-else-if="documentType == 'outing'" />
+          <document-title :document="document" v-else />
+        </div>
+      </a>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  props: {
+    documents: {
+      type: Object,
+      default: null,
+    },
+    promises: {
+      type: Array,
+      default: null,
+    },
+    documentType: {
+      type: String,
+      default: null,
+    },
+  },
+};
+</script>
+
+<style scoped>
+.toc-entry {
+  display: inline-block;
+}
+.toc-number {
+  margin-right: 7px;
+}
+</style>

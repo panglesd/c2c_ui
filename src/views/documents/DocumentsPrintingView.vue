@@ -1,15 +1,29 @@
 <template>
   <div class="section documents-view">
     <html-header :title="getDocumentTypeTitle(documentType)" />
-
-    <div class="documents-container">
+    <printing-options
+      :documents="documents"
+      :promises="promises"
+      @set-page-breaks="pageBreaks = $event"
+      @set-image-printing="includeImages = $event"
+      @set-toc-visibility="summaryVisibility = $event"
+    />
+    <printing-summary
+      v-if="summaryVisibility"
+      :documents="documents"
+      :document-type="documentType"
+      @summary-click="scrollTo($event)"
+    />
+    <div :class="['documents-container', includeImages ? 'print-image' : '']">
       <div v-for="(doc, index) in promises" :key="index" class="column">
         <loading-notification :promise="promise" />
+        <div v-if="pageBreaks && (index > 0 || summaryVisibility)" class="page-break" />
         <component
           v-if="doc.promise.data"
           :is="documentType + '-view'"
           :document-type="documentType"
           :document="doc.promise.data"
+          :id="'toc-entry-' + index"
         />
       </div>
     </div>
@@ -17,6 +31,8 @@
 </template>
 
 <script>
+import PrintingOptions from './utils/PrintingOptions';
+import PrintingSummary from './utils/PrintingSummary';
 
 import c2c from '@/js/apis/c2c';
 import constants from '@/js/constants';
@@ -42,7 +58,9 @@ export default {
     MapView,
     OutingView,
     ProfileView,
+    PrintingOptions,
     RouteView,
+    PrintingSummary,
     WaypointView,
     XreportView,
   },
@@ -51,12 +69,18 @@ export default {
     return {
       promise: null,
       promises: [],
+      pageBreaks: false,
+      includeImages: false,
+      summaryVisibility: true,
     };
   },
 
   computed: {
     documentType() {
       return this.$route.name.slice(0, -'s-print'.length);
+    },
+    documents() {
+      return this.promise.data;
     },
   },
 
@@ -92,3 +116,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.page-break {
+  page-break-after: always;
+}
+</style>
