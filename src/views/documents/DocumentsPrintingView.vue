@@ -113,6 +113,17 @@ export default {
     getDocumentTypeTitle(documentType) {
       return this.$gettext(documentType + 's');
     },
+
+    scrollTo(name) {
+      const el = document.querySelector("#toc-entry-"+name);
+      if (el) {
+        const docEl = document.documentElement;
+        const docRect = docEl.getBoundingClientRect();
+        const elRect = el.getBoundingClientRect();
+        const y = elRect.top - docRect.top;
+        window.scrollTo(0, y - 50); // navbar height ...
+      }
+    },
   },
 };
 </script>
