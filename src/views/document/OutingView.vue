@@ -6,7 +6,7 @@
       :version="version"
       :document-type="documentType"
     ></masked-document-version-info>
-    <document-view-header v-if="document" :document="document" :version="version" />
+    <document-view-header :prev="prev" :next="next" v-if="document" :document="document" :version="version" />
 
     <images-box v-if="document" :document="document" />
 
@@ -21,7 +21,6 @@
           <div class="no-print" v-for="route of document.associations.routes" :key="route.document_id">
             <pretty-route-link :route="route" hide-area hide-orientation />
           </div>
-
           <div>
             <!-- API anti-pattern :
                 associations.users should have been called associations.profiles
@@ -107,6 +106,7 @@
         <tool-box :document="document" v-if="$screen.isMobile" />
 
         <comments-box :document="document" />
+        <search-navigation-box document-type="outing" :outings="outings" :index="index_in_outings" />
       </div>
       <document-print-license :document="document" />
     </div>

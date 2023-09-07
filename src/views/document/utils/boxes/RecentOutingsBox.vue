@@ -6,7 +6,7 @@
     </div>
 
     <div v-for="(outing, i) of outings" :key="i">
-      <pretty-outing-link :outing="outing" />
+      <pretty-outing-link :outing="outing" :query="allOutingsQuery" />
     </div>
 
     <div
@@ -48,6 +48,17 @@ export default {
   computed: {
     outings() {
       let outings = this.document.associations.recent_outings?.documents || this.document.associations.outings;
+      let query = this.allOutingsQuery;
+      let add_query = (document, i) => {
+        let offset = query.offset ? query.offset : '0';
+        let index = parseInt(offset) + i;
+        let s_query = Object.assign({}, query);
+        s_query.offset = Math.max(0, index - 5);
+        s_query.limit = 10;
+        document.search_query = { query: s_query, index: index };
+      };
+
+      if (outings !== null) outings.forEach(add_query);
 
       if (this.includeEmptyOutings) {
         return outings;

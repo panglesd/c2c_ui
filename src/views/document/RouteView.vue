@@ -6,7 +6,7 @@
       :version="version"
       :document-type="documentType"
     ></masked-document-version-info>
-    <document-view-header v-if="document" :document="document" :version="version" />
+    <document-view-header :prev="prev" :next="next" v-if="document" :document="document" :version="version" />
     <div v-if="document" class="columns is-block-print">
       <div class="column is-3 no-print">
         <map-box :document="document" @has-protection-area="hasProtectionArea = true" />
@@ -126,6 +126,8 @@
         <images-box :document="document" />
 
         <recent-outings-box :document="document" />
+
+        <search-navigation-box document-type="route" :outings="outings" :index="index_in_outings" />
 
         <tool-box :document="document" v-if="$screen.isMobile" />
 
