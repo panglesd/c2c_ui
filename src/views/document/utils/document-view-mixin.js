@@ -5,6 +5,7 @@ import ImagesBox from './boxes/ImagesBox';
 import MapBox from './boxes/MapBox';
 import RecentOutingsBox from './boxes/RecentOutingsBox';
 import RoutesBox from './boxes/RoutesBox';
+import SearchNavigationBox from './boxes/SearchNavigationBox';
 import ToolBox from './boxes/ToolBox';
 import ActivitiesField from './field-viewers/ActivitiesField';
 import DoubleNumericField from './field-viewers/DoubleNumericField';
@@ -37,6 +38,7 @@ export default {
     MarkdownSection,
     ProfilesLinks,
     RecentOutingsBox,
+    SearchNavigationBox,
     ToolBox,
     RoutesBox,
     ImagesBox,
@@ -54,6 +56,8 @@ export default {
   data() {
     return {
       promise: null,
+      search_promise: null,
+      blibli: 'yoyo',
     };
   },
 
@@ -128,6 +132,46 @@ export default {
       return doc;
     },
 
+    /*
+     * properties computed when document is loaded
+     */
+    search() {
+      if (!this.search_promise?.data) {
+        return false;
+      }
+
+      const doc = this.isVersionView ? undefined : this.search_promise.data;
+
+      return doc;
+    },
+
+    /*
+     * properties computed when document is loaded
+     */
+    index() {
+      if (!this.search) {
+        return undefined;
+      }
+      if (!this.search.documents) {
+        return undefined;
+      }
+      return this.search.documents.findIndex((d) => d.document_id === this.documentId);
+    },
+
+    outings() {
+      if (!this.search) {
+        return undefined;
+      }
+      let beginning = Math.max(this.index - 3, 0);
+      let end = this.index + 4;
+      return this.search.documents.slice(beginning, end);
+    },
+
+    index_in_outings() {
+      let beginning = Math.max(this.index - 3, 0);
+      return this.index - beginning;
+    },
+
     version() {
       if (!this.promise.data || !this.isVersionView) {
         return undefined;
@@ -142,6 +186,17 @@ export default {
 
     lang() {
       return this.document?.cooked?.lang;
+    },
+
+    /*
+     * properties computed when search is loaded
+     */
+    previous() {
+      if (!this.search_promise?.data) {
+        return undefined;
+      }
+
+      return this.search_promise.data.documents[0].document_id;
     },
   },
 
@@ -205,6 +260,8 @@ export default {
         }
 
         this.$imageViewer.clear();
+        this.search_promise = c2c[this.documentType].getAll(this.$route.query);
+
         this.promise = c2c[this.documentType]
           .getCooked(this.documentId, this.expected_lang)
           .then(this.handleRedirection)
@@ -220,7 +277,7 @@ export default {
 
     handleRedirection() {
       if (this.document.redirects_to) {
-        this.$router.push({ params: { id: this.document.redirects_to } });
+        this.$router.push({ params: { id: this.document.redirects_to, query: this.$route.query } });
       }
     },
 
@@ -257,9 +314,8 @@ export default {
       if (this.$route.hash) {
         path += this.$route.hash;
       }
-
       if (this.$route.path !== path) {
-        this.$router.replace(path);
+        this.$router.replace({ path: path, query: this.$route.query });
       }
     },
 

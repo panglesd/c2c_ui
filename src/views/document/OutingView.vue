@@ -21,7 +21,8 @@
           <div class="no-print" v-for="route of document.associations.routes" :key="route.document_id">
             <pretty-route-link :route="route" hide-area hide-orientation />
           </div>
-
+          <div>Before: {{ previous }}</div>
+          <div>After</div>
           <div>
             <!-- API anti-pattern :
                 associations.users should have been called associations.profiles
@@ -107,6 +108,7 @@
         <tool-box :document="document" v-if="$screen.isMobile" />
 
         <comments-box :document="document" />
+        <search-navigation-box document-type="outing" :outings="outings" :index="index_in_outings" />
       </div>
       <document-print-license :document="document" />
     </div>

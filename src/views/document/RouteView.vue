@@ -127,6 +127,8 @@
 
         <recent-outings-box :document="document" />
 
+        <search-navigation-box document-type="route" :outings="outings" :index="index_in_outings" />
+
         <tool-box :document="document" v-if="$screen.isMobile" />
 
         <comments-box :document="document" />
