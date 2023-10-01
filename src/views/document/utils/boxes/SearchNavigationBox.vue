@@ -5,7 +5,7 @@
     </div>
 
     <div v-for="(outing, i) of outings" :key="i">
-      <component :is="link()" :class="current_index(i)" :[dynamic]="outing" :query="$route.query" />
+      <component :is="link()" :class="current_index(i)" :[documentType]="outing" :query="$route.query" />
     </div>
 
     <div
@@ -19,9 +19,6 @@
       >
         <span v-translate>show all</span>&nbsp;<span class="badge">{{ totalOutings }}</span>
       </router-link>
-      <add-link v-if="showAddOutingButton" document-type="outing" :query="addOutingQuery" class="button is-primary">
-        <span v-translate v-if="outings.length === 0">Add the first outing</span>
-      </add-link>
     </div>
   </div>
 </template>
@@ -36,12 +33,6 @@ export default {
     documentType: { default: '' },
     outings: { default: [1, 2, 3] },
     index: { default: 0 },
-  },
-
-  data() {
-    return {
-      dynamic: 'route',
-    };
   },
 
   methods: {
