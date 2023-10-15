@@ -140,9 +140,19 @@ export default {
         return false;
       }
 
-      const doc = this.isVersionView ? undefined : this.search_promise.data;
+      const documents = this.isVersionView ? undefined : this.search_promise.data;
 
-      return doc;
+      let add_query = (document, i) => {
+        let offset = this.$route.query.offset ? this.$route.query.offset : '0';
+        let index = parseInt(offset) + i;
+        let query = Object.assign({}, this.$route.query);
+        query.offset = Math.max(0, index - 5);
+        query.limit = 10;
+        document.search_query = { query: query, index: index };
+      };
+      if (documents !== null) documents.documents.forEach(add_query);
+
+      return documents;
     },
 
     /*
@@ -260,7 +270,12 @@ export default {
         }
 
         this.$imageViewer.clear();
-        this.search_promise = c2c[this.documentType].getAll(this.$route.query);
+
+        if (typeof this.$route.query.offset !== 'undefined') {
+          this.search_promise = c2c[this.documentType].getAll(this.$route.query);
+        } else {
+          this.search_promise = new Promise(() => []);
+        }
 
         this.promise = c2c[this.documentType]
           .getCooked(this.documentId, this.expected_lang)

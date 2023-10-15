@@ -1,6 +1,6 @@
 <template>
   <router-link
-    :to="{ name: documentType, params: { id: document.document_id, lang: lang }, query: $route.query }"
+    :to="{ name: documentType, params: { id: document.document_id, lang: lang }, query: document.search_query?.query }"
     :target="target"
     :title="$documentUtils.getDocumentTitle(document, $route.params.lang)"
   >
@@ -31,6 +31,17 @@ export default {
       type: String,
       default: undefined,
     },
+  },
+
+  computed: {
+    // query() {
+    //   if (this.document.search_query) {
+    //     let query = this.document.search_query.query;
+    //     query.index = this.document.search_query.index;
+    //     return query;
+    //   }
+    //   return {};
+    // },
   },
 };
 </script>

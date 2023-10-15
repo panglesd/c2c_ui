@@ -1,5 +1,5 @@
 <template>
-  <div class="box no-print" v-if="isNormalView">
+  <div class="box no-print" v-if="isNormalView && outings.length !== 0">
     <div class="title is-2">
       <span v-translate>Search</span>
     </div>
@@ -30,9 +30,20 @@ export default {
   mixins: [viewModeMixin],
 
   props: {
-    documentType: { default: '' },
-    outings: { default: [1, 2, 3] },
-    index: { default: 0 },
+    documentType: {
+      type: String,
+      default: '',
+    },
+    outings: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
+    index: {
+      type: Number,
+      default: 0,
+    },
   },
 
   methods: {
@@ -50,6 +61,6 @@ export default {
 
 <style scoped lang="scss">
 .current-document {
-  background-color: hsl(0, 0, 85%);
+  background-color: hsl(0deg, 0%, 85%);
 }
 </style>

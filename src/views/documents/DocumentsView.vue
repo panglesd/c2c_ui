@@ -95,7 +95,7 @@
             @mouseenter="highlightedDocument = document"
             @mouseleave="highlightedDocument = null"
           >
-            <document-card :highlighted="highlightedDocument === document" :document="document" />
+            <document-card :highlighted="highlightedDocument === document" :document="document" :query="$route.query" />
           </div>
         </div>
 
@@ -104,6 +104,7 @@
           :documents="documents ? documents : {}"
           :document-type="documentType"
           :highlighted-document="highlightedDocument"
+          :query="$route.query"
           @highlight-document="highlightedDocument = arguments[0]"
           class="documents-table"
         />
@@ -172,7 +173,17 @@ export default {
       return ['result', 'both'].includes(this.displayMode);
     },
     documents() {
-      return this.promise.data;
+      let documents = this.promise.data;
+      let add_query = (document, i) => {
+        let offset = this.$route.query.offset ? this.$route.query.offset : '0';
+        let index = parseInt(offset) + i;
+        let query = Object.assign({}, this.$route.query);
+        query.offset = Math.max(0, index - 5);
+        query.limit = 10;
+        document.search_query = { query: query, index: index };
+      };
+      if (documents !== null) documents.documents.forEach(add_query);
+      return documents;
     },
     documentType() {
       return this.$route.name.slice(0, -1);
