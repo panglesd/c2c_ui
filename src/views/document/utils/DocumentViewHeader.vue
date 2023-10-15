@@ -5,7 +5,11 @@
 
       <document-version-banner :version="version" :document="document" />
       <div class="columns">
-        <div class="column is-narrow"><div class="box">&lt;</div></div>
+        <div v-if="prev" class="column is-narrow">
+          <div class="box">
+            <document-link :document="prev" class="pretty-route-link has-hover-background">&lt;</document-link>
+          </div>
+        </div>
         <div class="box column">
           <span v-if="!isDraftView" class="is-pulled-right button-bar no-print">
             <gotop-button v-if="isPrintingView" />
@@ -47,7 +51,11 @@
             </span>
           </h1>
         </div>
-        <div class="column is-narrow"><div class="box">&gt;</div></div>
+        <div v-if="next" class="column is-narrow">
+          <div class="box">
+            <document-link :document="next" class="pretty-route-link has-hover-background">&gt;</document-link>
+          </div>
+        </div>
       </div>
       <images-uploader ref="imagesUploader" :lang="lang" :parent-document="document" />
     </div>
@@ -79,6 +87,14 @@ export default {
 
   props: {
     version: {
+      type: Object,
+      default: null,
+    },
+    prev: {
+      type: Object,
+      default: null,
+    },
+    next: {
       type: Object,
       default: null,
     },

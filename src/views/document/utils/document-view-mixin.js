@@ -57,7 +57,6 @@ export default {
     return {
       promise: null,
       search_promise: null,
-      blibli: 'yoyo',
     };
   },
 
@@ -166,6 +165,32 @@ export default {
         return undefined;
       }
       return this.search.documents.findIndex((d) => d.document_id === this.documentId);
+    },
+
+    prev() {
+      if (!this.search) {
+        return undefined;
+      }
+      if (!this.search.documents) {
+        return undefined;
+      }
+      if (typeof this.index === 'undefined') {
+        return undefined;
+      }
+      return this.search.documents[this.index - 1];
+    },
+
+    next() {
+      if (!this.search) {
+        return undefined;
+      }
+      if (!this.search.documents) {
+        return undefined;
+      }
+      if (typeof this.index === 'undefined') {
+        return undefined;
+      }
+      return this.search.documents[this.index + 1];
     },
 
     outings() {
