@@ -32,16 +32,5 @@ export default {
       default: undefined,
     },
   },
-
-  computed: {
-    // query() {
-    //   if (this.document.search_query) {
-    //     let query = this.document.search_query.query;
-    //     query.index = this.document.search_query.index;
-    //     return query;
-    //   }
-    //   return {};
-    // },
-  },
 };
 </script>

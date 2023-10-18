@@ -354,6 +354,7 @@ export default {
       if (this.$route.hash) {
         path += this.$route.hash;
       }
+
       if (this.$route.path !== path) {
         this.$router.replace({ path: path, query: this.$route.query });
       }
