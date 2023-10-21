@@ -12,13 +12,13 @@
       v-if="(!hideSeeAllResultsButton && documents.length) || showAddOutingButton"
       class="has-text-centered add-section"
     >
-      <!-- <router-link -->
-      <!--   :to="{ name: 'outings', query: allOutingsQuery }" -->
-      <!--   class="button is-primary" -->
-      <!--   v-if="!hideSeeAllResultsButton && documents.length" -->
-      <!-- > -->
-      <!--   <span v-translate>show all</span>&nbsp;<span class="badge">{{ totalOutings }}</span> -->
-      <!-- </router-link> -->
+      <router-link
+        :to="{ name: documentType + 's', query: allResultsQuery }"
+        class="button is-primary"
+        v-if="!hideSeeAllResultsButton && documents.length"
+      >
+        <span v-translate>Show search</span>
+      </router-link>
     </div>
   </div>
 </template>
@@ -60,6 +60,16 @@ export default {
     to() {
       // If there are less than 5 results before index, we show more results after
       return this.documents.length, this.index + 5 + Math.max(0, 5 - this.index);
+    },
+
+    allResultsQuery() {
+      if (this.documents[0]) {
+        let query = Object.assign({}, this.documents[0].search_query);
+        delete query.limit;
+        delete query.offset;
+        return query;
+      }
+      return null;
     },
   },
 
