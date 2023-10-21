@@ -7,9 +7,9 @@
       :document-type="documentType"
     ></masked-document-version-info>
     <document-view-header
+      v-if="document"
       :previous-document="previousDocument"
       :next-document="nextDocument"
-      v-if="document"
       :document="document"
       :version="version"
     />

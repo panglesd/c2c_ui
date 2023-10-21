@@ -6,7 +6,13 @@
       :version="version"
       :document-type="documentType"
     ></masked-document-version-info>
-    <document-view-header v-if="document" :document="document" :version="version" />
+    <document-view-header
+      :previous-document="previousDocument"
+      :next-document="nextDocument"
+      v-if="document"
+      :document="document"
+      :version="version"
+    />
     <div v-if="document" class="columns print-no-columns">
       <div class="column is-3">
         <div class="box">
