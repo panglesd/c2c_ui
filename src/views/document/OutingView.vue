@@ -6,7 +6,13 @@
       :version="version"
       :document-type="documentType"
     ></masked-document-version-info>
-    <document-view-header :prev="prev" :next="next" v-if="document" :document="document" :version="version" />
+    <document-view-header
+      :previous-document="previousDocument"
+      :next-document="nextDocument"
+      v-if="document"
+      :document="document"
+      :version="version"
+    />
 
     <images-box v-if="document" :document="document" />
 

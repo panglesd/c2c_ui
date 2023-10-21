@@ -5,8 +5,8 @@
 
       <document-version-banner :version="version" :document="document" />
       <div class="columns">
-        <div class="column is-narrow" v-if="prev">
-          <document-link :document="prev" class="box">&lt;</document-link>
+        <div class="column is-narrow" v-if="previousDocument">
+          <document-link :document="previousDocument" class="box">&lt;</document-link>
         </div>
         <div class="box column">
           <span v-if="!isDraftView" class="is-pulled-right button-bar no-print">
@@ -49,8 +49,8 @@
             </span>
           </h1>
         </div>
-        <div class="column is-narrow" v-if="next">
-          <document-link :document="next" class="box">&gt;</document-link>
+        <div class="column is-narrow" v-if="nextDocument">
+          <document-link :document="nextDocument" class="box">&gt;</document-link>
         </div>
       </div>
       <images-uploader ref="imagesUploader" :lang="lang" :parent-document="document" />
@@ -86,11 +86,11 @@ export default {
       type: Object,
       default: null,
     },
-    prev: {
+    previousDocument: {
       type: Object,
       default: null,
     },
-    next: {
+    nextDocument: {
       type: Object,
       default: null,
     },

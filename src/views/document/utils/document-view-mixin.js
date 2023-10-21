@@ -157,7 +157,7 @@ export default {
       return this.search.documents.findIndex((d) => d.document_id === this.documentId);
     },
 
-    prev() {
+    previousDocument() {
       if (!this.search) {
         return undefined;
       }
@@ -170,7 +170,7 @@ export default {
       return this.search.documents[this.index - 1];
     },
 
-    next() {
+    nextDocument() {
       if (!this.search) {
         return undefined;
       }
