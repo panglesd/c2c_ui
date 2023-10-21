@@ -15,6 +15,7 @@ import LabelValue from './field-viewers/LabelValue';
 import MarkdownSection from './field-viewers/MarkdownSection';
 import ProfilesLinks from './field-viewers/ProfilesLinks';
 
+import { add_search_queries } from '@/js/add-search-query';
 import c2c from '@/js/apis/c2c';
 import constants from '@/js/constants';
 import cooker from '@/js/cooker';
@@ -141,15 +142,7 @@ export default {
 
       const documents = this.isVersionView ? undefined : this.search_promise.data;
 
-      let add_query = (document, i) => {
-        let offset = this.$route.query.offset ? this.$route.query.offset : '0';
-        let index = parseInt(offset) + i; // index in the whole list of search results
-        let query = Object.assign({}, this.$route.query);
-        query.offset = Math.max(0, index - 5); // We take 5 results before
-        query.limit = 11; // And 11 results maximum: 5 before, 5 after
-        document.search_query = { query: query, index: index };
-      };
-      if (documents !== null) documents.documents.forEach(add_query);
+      add_search_queries(this.$route.query, documents.documents);
 
       return documents;
     },

@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import { add_search_queries } from '@/js/add-search-query';
 import { requireDocumentProperty } from '@/js/properties-mixins';
 import viewModeMixin from '@/js/view-mode-mixin';
 
@@ -49,17 +50,7 @@ export default {
     outings() {
       let outings = this.document.associations.recent_outings?.documents || this.document.associations.outings;
       let query = this.allOutingsQuery;
-      let add_query = (document, i) => {
-        let offset = query.offset ? query.offset : '0';
-        let index = parseInt(offset) + i;
-        let s_query = Object.assign({}, query);
-        s_query.offset = Math.max(0, index - 5);
-        s_query.limit = 10;
-        document.search_query = { query: s_query, index: index };
-      };
-
-      if (outings !== null) outings.forEach(add_query);
-
+      add_search_queries(query, outings);
       if (this.includeEmptyOutings) {
         return outings;
       } else {
