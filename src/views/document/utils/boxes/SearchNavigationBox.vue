@@ -1,24 +1,24 @@
 <template>
-  <div class="box no-print" v-if="isNormalView && outings.length !== 0">
+  <div class="box no-print" v-if="isNormalView && documents.length !== 0">
     <div class="title is-2">
-      <span v-translate>Search</span>
+      <span v-translate>Associated Search</span>
     </div>
 
-    <div v-for="(outing, i) of outings" :key="i">
-      <component :is="link()" :class="current_index(i)" :[documentType]="outing" :query="$route.query" />
+    <div v-for="(doc, i) of documents" :key="i">
+      <component :is="link()" :class="current_index(i)" :[documentType]="doc" />
     </div>
 
     <div
-      v-if="(!hideSeeAllResultsButton && outings.length) || showAddOutingButton"
+      v-if="(!hideSeeAllResultsButton && documents.length) || showAddOutingButton"
       class="has-text-centered add-section"
     >
-      <router-link
-        :to="{ name: 'outings', query: allOutingsQuery }"
-        class="button is-primary"
-        v-if="!hideSeeAllResultsButton && outings.length"
-      >
-        <span v-translate>show all</span>&nbsp;<span class="badge">{{ totalOutings }}</span>
-      </router-link>
+      <!-- <router-link -->
+      <!--   :to="{ name: 'outings', query: allOutingsQuery }" -->
+      <!--   class="button is-primary" -->
+      <!--   v-if="!hideSeeAllResultsButton && documents.length" -->
+      <!-- > -->
+      <!--   <span v-translate>show all</span>&nbsp;<span class="badge">{{ totalOutings }}</span> -->
+      <!-- </router-link> -->
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
       type: String,
       default: '',
     },
-    outings: {
+    documents: {
       type: Array,
       default() {
         return [];

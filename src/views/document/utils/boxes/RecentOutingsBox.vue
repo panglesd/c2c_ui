@@ -6,7 +6,7 @@
     </div>
 
     <div v-for="(outing, i) of outings" :key="i">
-      <pretty-outing-link :outing="outing" :query="allOutingsQuery" />
+      <pretty-outing-link :outing="outing" />
     </div>
 
     <div

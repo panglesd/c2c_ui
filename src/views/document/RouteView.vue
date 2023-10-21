@@ -127,7 +127,7 @@
 
         <recent-outings-box :document="document" />
 
-        <search-navigation-box document-type="route" :outings="outings" :index="index_in_outings" />
+        <search-navigation-box document-type="route" :documents="search.documents" :index="index" />
 
         <tool-box :document="document" v-if="$screen.isMobile" />
 

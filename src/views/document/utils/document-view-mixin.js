@@ -132,7 +132,7 @@ export default {
     },
 
     /*
-     * properties computed when document is loaded
+     * properties computed when search results is loaded
      */
     search() {
       if (!this.search_promise?.data) {
@@ -143,10 +143,10 @@ export default {
 
       let add_query = (document, i) => {
         let offset = this.$route.query.offset ? this.$route.query.offset : '0';
-        let index = parseInt(offset) + i;
+        let index = parseInt(offset) + i; // index in the whole list of search results
         let query = Object.assign({}, this.$route.query);
-        query.offset = Math.max(0, index - 5);
-        query.limit = 10;
+        query.offset = Math.max(0, index - 5); // We take 5 results before
+        query.limit = 11; // And 11 results maximum: 5 before, 5 after
         document.search_query = { query: query, index: index };
       };
       if (documents !== null) documents.documents.forEach(add_query);
@@ -154,9 +154,6 @@ export default {
       return documents;
     },
 
-    /*
-     * properties computed when document is loaded
-     */
     index() {
       if (!this.search) {
         return undefined;
@@ -193,20 +190,6 @@ export default {
       return this.search.documents[this.index + 1];
     },
 
-    outings() {
-      if (!this.search) {
-        return undefined;
-      }
-      let beginning = Math.max(this.index - 3, 0);
-      let end = this.index + 4;
-      return this.search.documents.slice(beginning, end);
-    },
-
-    index_in_outings() {
-      let beginning = Math.max(this.index - 3, 0);
-      return this.index - beginning;
-    },
-
     version() {
       if (!this.promise.data || !this.isVersionView) {
         return undefined;
@@ -221,17 +204,6 @@ export default {
 
     lang() {
       return this.document?.cooked?.lang;
-    },
-
-    /*
-     * properties computed when search is loaded
-     */
-    previous() {
-      if (!this.search_promise?.data) {
-        return undefined;
-      }
-
-      return this.search_promise.data.documents[0].document_id;
     },
   },
 
