@@ -5,7 +5,7 @@
     </div>
 
     <div v-for="(doc, i) of documents" :key="i">
-      <component :is="link()" :class="current_index(i)" :[documentType]="doc" />
+      <component v-if="i <= to && i >= from" :is="link" :class="current_index(i)" :[documentType]="doc" />
     </div>
 
     <div
@@ -46,14 +46,27 @@ export default {
     },
   },
 
+  computed: {
+    link() {
+      return 'pretty-' + this.documentType + '-link';
+    },
+
+    // We show 10 results centered in index.
+    from() {
+      // If there are less than 5 results after index, we show more results before
+      return this.index - 5 - Math.max(0, this.index + 1 + 5 - this.documents.length);
+    },
+
+    to() {
+      // If there are less than 5 results before index, we show more results after
+      return this.documents.length, this.index + 5 + Math.max(0, 5 - this.index);
+    },
+  },
+
   methods: {
     current_index(index) {
       if (index === this.index) return ['current-document'];
       else return [];
-    },
-
-    link() {
-      return 'pretty-' + this.documentType + '-link';
     },
   },
 };
